@@ -5,6 +5,16 @@ import gateprotect.Funktionen;
 
 public class Nummern {
 	
+	// try to get numeric value
+	public Integer tryParse(String txt) {
+		try {
+			return new Integer(txt);
+		} catch (NumberFormatException e) {
+		    return 0;
+		}
+	
+	} // end tryParse(string)
+	
 	// erhalten 1-12 nummern
 	public int erhalten_1_12(String txt) throws UnsupportedEncodingException {
 		
@@ -215,100 +225,145 @@ public class Nummern {
 	// erhalten 1000 - 999999
 	public int erhalten_1000_999999(String txt) throws UnsupportedEncodingException {
 		
-		String str1000 = "tausend";
-		int nPos1000; // thousand string beginning
-		String strNum = "";
-		int nThousandPrefix = 0; // thousand prefix (number)
-		int num = 0; // result num
-		String strSuffix = "";
-		int nPosSuffix; // suffix position
-		int nSuffix = 0; // suffix value
-		
-		//verify is a thousand number
-		if(txt.indexOf("tausend") != -1) {
-						
-			// string length without "tausend"
-			nPos1000 = txt.length() - str1000.length();
-			
-			// get thousand prefix
-			strNum = txt.substring(0,nPos1000);
-			
-			// numbers 1-12
-			nThousandPrefix = this.erhalten_1_12(strNum);
-			
-			// number 13-19
-			if(nThousandPrefix == 0) {
-				nThousandPrefix = this.erhalten_13_19(strNum);
-			}
-			
-			// number 20-29
-			if(nThousandPrefix == 0) {
-				nThousandPrefix = this.erhalten_20_29(strNum);
-			}
-			
-			// number 30-39
-			if(nThousandPrefix == 0) {
-				nThousandPrefix = this.erhalten_30_39(strNum);
-			}
-			
-			// number 40-99
-			if(nThousandPrefix == 0) {
-				nThousandPrefix = this.erhalten_40_99(strNum);
-			}
-			
-			// number 100-999
-			if(nThousandPrefix == 0) {
-				nThousandPrefix = this.erhalten_100_999(strNum);
-			}
-			
-			// thousands value
-			num = nThousandPrefix * 1000;
-			
-			if(txt.length() > (strNum.length() + str1000.length())) {
+		int num = 0; // number to return
 				
-				// There is a suffix
-				// suffix position
-				nPosSuffix = strNum.length() + str1000.length();
-				// suffix string
-				strSuffix = txt.substring(nPosSuffix);
+		String str1000 = "tausend";
+		String strPrefix = "";
+		String strSuffix = "";
+		int nPos1000;
+		int nPosSuffix;
+		int nPrefix = 0;
+		int nSuffix = 0;
+		
+		nPos1000 = txt.indexOf(str1000);
+		
+		// check if thousand
+		if(nPos1000 != -1) {
+			
+			// check prefix
+			if(nPos1000 > 0) {
+				
+				// prefix
+				strPrefix = txt.substring(0,nPos1000);
 				
 				// numbers 1-12
-				nSuffix = this.erhalten_1_12(strSuffix);
+				nPrefix = this.erhalten_1_12(strPrefix);
 				
 				// number 13-19
-				if(nSuffix == 0) {
-					nSuffix = this.erhalten_13_19(strSuffix);
+				if(nPrefix == 0) {
+					nPrefix = this.erhalten_13_19(strPrefix);
 				}
 				
 				// number 20-29
-				if(nSuffix == 0) {
-					nSuffix = this.erhalten_20_29(strSuffix);
+				if(nPrefix == 0) {
+					nPrefix = this.erhalten_20_29(strPrefix);
 				}
 				
 				// number 30-39
-				if(nSuffix == 0) {
-					nSuffix = this.erhalten_30_39(strSuffix);
+				if(nPrefix == 0) {
+					nPrefix = this.erhalten_30_39(strPrefix);
 				}
 				
 				// number 40-99
-				if(nSuffix == 0) {
-					nSuffix = this.erhalten_40_99(strSuffix);
+				if(nPrefix == 0) {
+					nPrefix = this.erhalten_40_99(strPrefix);
 				}
 				
 				// number 100-999
-				if(nSuffix == 0) {
-					nSuffix = this.erhalten_100_999(strSuffix);
+				if(nPrefix == 0) {
+					nPrefix = this.erhalten_100_999(strPrefix);
 				}
 				
-				// add suffix value
-				num = num + nSuffix;
+				// thousands value
+				num = nPrefix * 1000;
 				
-			} // end there's suffix
+				// check if there's a suffix
+				if(txt.length() > nPos1000 + 7) {
 					
-		} // end thousand verification
+					// there'es suffix
+					nPosSuffix = nPos1000 + 7;
+					strSuffix = txt.substring(nPosSuffix);
+					
+					// numbers 1-12
+					nSuffix = this.erhalten_1_12(strSuffix);
+					
+					// numbers 13-19
+					if(nSuffix == 0) {
+						nSuffix = this.erhalten_13_19(strSuffix);
+					}
+					
+					// numbers 20-29
+					if(nSuffix == 0) {
+						nSuffix = this.erhalten_20_29(strSuffix);
+					}
+					
+					// numbers 30-39
+					if(nSuffix == 0) {
+						nSuffix = this.erhalten_30_39(strSuffix);
+					}
+					
+					// numbers 40-99
+					if(nSuffix == 0) {
+						nSuffix = this.erhalten_40_99(strSuffix);
+					}
+					
+					// numbers 100-999
+					if(nSuffix == 0) {
+						nSuffix = this.erhalten_100_999(strSuffix);
+					}
+					
+					// cents and else value
+					num = num + nSuffix;
+					
+				} // end suffix
 				
+			} // end prefix
+			
+		} // end check if thousand
+
 		return num;
 		
 	} // end erhalten 1000-999999
+	
+	// erhalten 1.000.000 - 9.999.999
+	public int erhalten_1000000_9999999(String txt, String txtM) throws UnsupportedEncodingException {
+		
+		// txt = number of millions prefix :: txtM = millions string
+		
+		int num = 0; // number to return
+				
+		// numbers and names for millions
+		String[] tNum = {"zwei","drei","vier","fünf","sechs","sieben","acht","neun"};
+		int[] nNum = {2,3,4,5,6,7,8,9};
+		
+		String strMillion = "millionen";
+		String strSuffix = "";
+		int nPosSuffix;
+		int nSuffix = 0;
+		
+		// check millions string
+		if( txtM.indexOf(strMillion) == 0) {
+			
+			if( txtM.length() > strMillion.length() ) {
+				// millions plus else
+				nPosSuffix = strMillion.length();
+				strSuffix = txtM.substring(nPosSuffix);
+				nSuffix = this.erhalten_1000_999999(strSuffix);
+				if( nSuffix > 0) num = nSuffix;
+			}
+			
+			// millions quantity
+			for(int i = 0; i < tNum.length; i++) {
+				if(tNum[i].equals(Funktionen.makeUTF8(txt))) {
+					num = num + nNum[i] * 1000000;
+				}
+			}
+		
+		}
+		
+		// millions returned
+		return num;
+		
+	} // end erhalten_1000000_9999999	
 
 } // CLASS END
