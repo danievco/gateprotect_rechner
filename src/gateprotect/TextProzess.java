@@ -108,80 +108,80 @@ public class TextProzess extends HttpServlet {
 				// it's a literal.
 				if(numval[i] == 0) {
 				
-				// check if a number of millions is (yoda be proud of me!) xD
-				if( (i < (mn-1)) && (member[i+1] == "millionen") ) {
+					// check if a number of millions is (yoda be proud of me!) xD
+					if( (i < (mn-1)) && (member[i+1] == "millionen") ) {
+						
+						// MILLIONS -> 1.000.000 - 9.999.999
+						numval[i] = num.erhalten_1000000_9999999(strNum, worte[i+1]);
+						if(numval[i] != 0) {
+							found = true;
+						} // end numbers 1000-999999
+						
+					}
+									
+					// number 0
+					if(!found){
+						if(strNum.equals("null")) {
+							numval[i] = 0;
+							found = true;
+						}
+					} // end number 0
 					
-					// MILLIONS -> 1.000.000 - 9.999.999
-					numval[i] = num.erhalten_1000000_9999999(strNum, worte[i+1]);
-					if(numval[i] != 0) {
-						found = true;
+					// numbers 1-12
+					if(!found) {				
+						numval[i] = num.erhalten_1_12(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 1-12
+					
+					// numbers 13-19
+					if(!found) {			
+						numval[i] = num.erhalten_13_19(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 13-19
+					
+					// numbers 20-29
+					if(!found) {				
+						numval[i] = num.erhalten_20_29(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 20-29
+					
+					// numbers 30-39
+					if(!found) {				
+						numval[i] = num.erhalten_30_39(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 30-39
+					
+					// numbers 40-99
+					if(!found) {				
+						numval[i] = num.erhalten_40_99(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 40-99
+					
+					// numbers 100-999
+					if(!found) {				
+						numval[i] = num.erhalten_100_999(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
+					} // end numbers 100-999
+					
+					// numbers 1000-999999
+					if(!found) {				
+						numval[i] = num.erhalten_1000_999999(strNum);
+						if(numval[i] != 0) {
+							found = true;
+						}
 					} // end numbers 1000-999999
-					
-				}
-								
-				// number 0
-				if(!found){
-					if(strNum.equals("null")) {
-						numval[i] = 0;
-						found = true;
-					}
-				} // end number 0
-				
-				// numbers 1-12
-				if(!found) {				
-					numval[i] = num.erhalten_1_12(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 1-12
-				
-				// numbers 13-19
-				if(!found) {			
-					numval[i] = num.erhalten_13_19(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 13-19
-				
-				// numbers 20-29
-				if(!found) {				
-					numval[i] = num.erhalten_20_29(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 20-29
-				
-				// numbers 30-39
-				if(!found) {				
-					numval[i] = num.erhalten_30_39(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 30-39
-				
-				// numbers 40-99
-				if(!found) {				
-					numval[i] = num.erhalten_40_99(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 40-99
-				
-				// numbers 100-999
-				if(!found) {				
-					numval[i] = num.erhalten_100_999(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 100-999
-				
-				// numbers 1000-999999
-				if(!found) {				
-					numval[i] = num.erhalten_1000_999999(strNum);
-					if(numval[i] != 0) {
-						found = true;
-					}
-				} // end numbers 1000-999999
 				
 				} // if(numval[i] == 0)
 				
