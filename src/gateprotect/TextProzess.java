@@ -237,7 +237,7 @@ public class TextProzess extends HttpServlet {
 						nResult = nResult * numval[i];
 					}
 					// geteilt durch -> // (double) :: numval > 0 to avoid divided by zero error
-					if( (member[i-1] == "/") && (member[i-2] == "") && (numval[i] > 0)) {
+					if( (member[i-1] == "/") && (numval[i] > 0)) {
 						nResult = nResult / numval[i];
 					}
 				}
