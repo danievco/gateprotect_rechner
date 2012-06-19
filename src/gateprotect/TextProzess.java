@@ -81,7 +81,7 @@ public class TextProzess extends HttpServlet {
 				continue;
 			}
 			
-			if(worte[i].equals("durch") || worte[i].equals("*")) {
+			if(worte[i].equals("durch") || worte[i].equals("/")) {
 				member[i] = "/";
 				continue;
 			}
